@@ -67,24 +67,71 @@
 #         break
 # -------------------------------------------
 # 4721
-input = list(map(int, open('4721.txt').read().splitlines()))
-suma = 0
-for x in input:
-    if x % 61 == 0:
-        while x != 0:
-            suma += x % 10
-            x //= 10
-
-min_sum = 20001
-count = 0
-for i in range(len(input) - 1):
-    a = input[i]
-    b = input[i + 1]
-    if a > suma >= b and b % 100 == 33 or b > suma >= a and a % 100 == 33:
-        min_sum = min(min_sum, a+b)
-        count += 1
-print(min_sum, count)
+# input = list(map(int, open('4721.txt').read().splitlines()))
+# suma = 0
+# for x in input:
+#     if x % 61 == 0:
+#         while x != 0:
+#             suma += x % 10
+#             x //= 10
+#
+# min_sum = 20001
+# count = 0
+# for i in range(len(input) - 1):
+#     a = input[i]
+#     b = input[i + 1]
+#     if a > suma >= b and b % 100 == 33 or b > suma >= a and a % 100 == 33:
+#         min_sum = min(min_sum, a+b)
+#         count += 1
+# print(min_sum, count)
 
 
 # input = list(map(int, input))
 # print(input)
+
+def isAr(x):
+    if x[2] - x[1] == x[1] - x[0] and x[2] > x[0]:
+        return x[2] - x[1]
+    else:
+        return 0
+
+
+def isGe(x):
+    if x[2] / x[1] == x[1] / x[0] and x[2] > x[0]:
+        return x[2] / x[1]
+    else:
+        return 0
+
+
+def pol_5022():
+    count = 0
+    max_six = 0
+    data = list(map(int, open('17-281.txt').read().splitlines()))
+    for i in range(len(data) - 5):
+        if isAr(data[i:i + 3]) and isGe(data[i + 3:i + 6]) or isGe(data[i:i + 3]) and isAr(data[i + 3:i + 6]):
+            if isAr(data[i:i + 3]) == isGe(data[i + 3:i + 6]) or isGe(data[i:i + 3]) == isAr(data[i + 3:i + 6]):
+                count += 1
+                max_six = max(sum(data[i:i + 6]), max_six)
+    print(count, max_six)
+
+
+# pol_5022()
+
+def pol_4319():
+    data = list(map(int, open('17-4.txt').read().splitlines()))
+    count_all = 0
+    max_x = 0
+    min_x = 10001
+    for x in data:
+        count = 0
+        if x % 2 == 0: count += 1
+        if x % 3 == 0: count += 1
+        if x % 5 == 0: count += 1
+        if x % 7 == 0: count += 1
+        if count == 2:
+            count_all += 1
+            max_x = max(x, max_x)
+            min_x = min(x, min_x)
+    print(count_all, max_x + min_x)
+
+pol_4319()
